@@ -116,15 +116,8 @@ void calcPrimes(
 class comma_numpunct : public std::numpunct<char>
 {
 protected:
-    virtual char do_thousands_sep() const
-    {
-        return ',';
-    }
-
-    virtual std::string do_grouping() const
-    {
-        return "\03";
-    }
+    virtual char do_thousands_sep() const { return ','; }
+    virtual std::string do_grouping() const { return "\03"; }
 };
 
 int main()
@@ -135,7 +128,6 @@ int main()
     // std::locale::global) - then extends it with an extra facet that
     // controls numeric output.
     std::locale comma_locale(std::locale(), new comma_numpunct());
-
     // tell cout to use our new locale.
     std::cout.imbue(comma_locale);
 
