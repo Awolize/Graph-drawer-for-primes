@@ -8,6 +8,11 @@
 #include <sstream>
 #include <locale>
 
+#include <thread>
+#include <mutex>
+
+std::mutex mtx;
+
 using namespace std;
 using namespace std::chrono;
 
@@ -98,9 +103,7 @@ void calcPrimes(
     stopTime = high_resolution_clock::now();
     auto gapDuration = std::chrono::duration_cast<milliseconds>(stopTime - startTime);
 
-    pointList[i].move((((float(totPrimeGaps) / numofPrimes) * step) + 140), ypos);
-    ypos -= 80;
-
+    mtx.lock();
     cout << endl
          << fixed << setprecision(2);
     cout << "Calculated:  " << stop << " primes." << endl;
@@ -110,7 +113,9 @@ void calcPrimes(
     cout << "Gap  took:   " << display(std::chrono::milliseconds(gapDuration)) << endl;
     cout << endl;
 
+    pointList[i].move((((float(totPrimeGaps) / numofPrimes) * step) + 140), ypos - 80 * i);
     calcList[i] = true;
+    mtx.unlock();
 }
 
 class comma_numpunct : public std::numpunct<char>
@@ -122,7 +127,6 @@ protected:
 
 int main()
 {
-
     // this creates a new locale based on the current application default
     // (which is either the one given on startup, but can be overriden with
     // std::locale::global) - then extends it with an extra facet that
@@ -139,16 +143,12 @@ int main()
 
     // Initiate textures
     sf::Texture graphTexture;
-    if (!graphTexture.loadFromFile("resource/graph.png"))
-    {
-    }
+    graphTexture.loadFromFile("resource/graph.png");
     sf::Sprite graphSprite;
     graphSprite.setTexture(graphTexture);
     sf::Texture algorithmTexture;
 
-    if (!algorithmTexture.loadFromFile("resource/algorithm.png"))
-    {
-    }
+    algorithmTexture.loadFromFile("resource/algorithm.png");
     sf::Sprite algorithmSprite;
     algorithmSprite.setTexture(algorithmTexture);
     algorithmSprite.setScale(0.4, 0.4);
@@ -162,6 +162,14 @@ int main()
         point.setFillColor(sf::Color(0, 0, 0));
         point.setScale(0.2, 0.2);
         pointList.push_back(point);
+    }
+
+    vector<std::thread> threads;
+    for (size_t i = 0; i < 8; i++)
+    {
+        size_t start = 0; //pow(10, iteration);
+        size_t end = pow(10, i + 1);
+        threads.push_back(std::thread(calcPrimes, start, end, std::ref(pointList), std::ref(calcList), i));
     }
 
     // run the program as long as the window is open
@@ -180,20 +188,11 @@ int main()
             window.draw(graphSprite);
             window.draw(algorithmSprite);
 
-            if (iteration < 8)
-            {
-                if (!calcList[iteration])
-                {
-                    size_t start = 0; //pow(10, iteration);
-                    size_t end = pow(10, iteration + 1);
-                    calcPrimes(start, end, pointList, calcList, iteration);
-                }
-                iteration++;
-            }
-
+            mtx.lock();
             for (size_t i = 0; i < 8; i++)
                 if (calcList[i])
                     window.draw(pointList[i]);
+            mtx.unlock();
 
             window.display();
         }
