@@ -1,0 +1,12 @@
+﻿  main.cpp
+C:\Users\alexs\source\repos\Project1\main.cpp(105,74): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\alexs\source\repos\Project1\main.cpp(162,35): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\alexs\source\repos\Project1\main.cpp(170,26): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\alexs\source\repos\Project1\main.cpp(193,17): warning C4244: 'initializing': conversion from 'double' to 'size_t', possible loss of data
+C:\Users\alexs\source\repos\Project1\main.cpp(194,59): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Generating code
+  1 of 274 functions ( 0.4%) were compiled, the rest were copied from previous compilation.
+    0 functions were new in current compilation
+    1 functions had inline decision re-evaluated but remain unchanged
+  Finished generating code
+  Project1.vcxproj -> C:\Users\alexs\source\repos\Project1\x64\Release\Project1.exe

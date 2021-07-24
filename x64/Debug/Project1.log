@@ -1,0 +1,8 @@
+﻿  main.cpp
+C:\Users\alexs\source\repos\Project1\main.cpp(105,49): warning C4244: 'argument': conversion from 'int' to 'float', possible loss of data
+C:\Users\alexs\source\repos\Project1\main.cpp(105,41): warning C4244: 'argument': conversion from 'unsigned __int64' to 'float', possible loss of data
+C:\Users\alexs\source\repos\Project1\main.cpp(142,35): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\alexs\source\repos\Project1\main.cpp(150,26): warning C4305: 'argument': truncation from 'double' to 'float'
+C:\Users\alexs\source\repos\Project1\main.cpp(174,33): warning C4244: 'initializing': conversion from 'double' to 'unsigned __int64', possible loss of data
+C:\Users\alexs\source\repos\Project1\main.cpp(175,67): warning C4267: 'argument': conversion from 'size_t' to 'int', possible loss of data
+  Project1.vcxproj -> C:\Users\alexs\source\repos\Project1\x64\Debug\Project1.exe
